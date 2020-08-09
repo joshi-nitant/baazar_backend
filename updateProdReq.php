@@ -1,32 +1,34 @@
 <?php
-$DB_SERVER = 'localhost';
-$DB_USERNAME = 'root';
-$DB_PASSWORD = '';
-$DB_NAME = 'baazar';
-$DB_PORT = 3307;
-
+// $DB_SERVER = 'localhost';
+// $DB_USERNAME = 'root';
+// $DB_PASSWORD = '';
+// $DB_NAME = 'baazar';
+// $DB_PORT = 3307;
+require 'connection.php';
 $isSeller = $_POST['isSeller'];
 $price = $_POST['price'];
 $breed = $_POST['breed'];
 $quantity = $_POST['quantity'];
+$remaining_qty = $_POST['remainingQty'];
 // $timestamp = strtotime($_POST['date']);
 // $date = date("Y-m-d H:i:s", $timestamp);
-$address = $_POST['address'];
-$state = $_POST['state'];
-$pincode = $_POST['pincode'];
-$city = $_POST['city'];
-$latitude = $_POST['latitude'];
-$longitude = $_POST['longitude'];
+// $address = $_POST['address'];
+// $state = $_POST['state'];
+// $pincode = $_POST['pincode'];
+// $city = $_POST['city'];
+// $latitude = $_POST['latitude'];
+// $longitude = $_POST['longitude'];
+
 $user_id = $_POST['user_id'];
 $category = $_POST['category'];
 $id = $_POST['id'];
 // Create connection
-$conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME,$DB_PORT);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+// $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME,$DB_PORT);
+//
+// // Check connection
+// if ($conn->connect_error) {
+//   die("Connection failed: " . $conn->connect_error);
+// }
 
 if($isSeller=="true"){
 	try{
@@ -57,12 +59,7 @@ if($isSeller=="true"){
           `price_expected`=$price,
           `breed`='$breed',
           `category_id`=$category,
-          `latitude`='$latitude',
-          `longitude`='$longitude',
-          `address`='$address',
-          `state`='$state',
-          `city`='$city',
-          `pincode`='$pincode'
+          `remaining_qty`=$remaining_qty
            WHERE prod_id=$id";
 
 
@@ -85,12 +82,7 @@ if($isSeller=="true"){
             `price_expected`=$price,
             `breed`='$breed',
             `category`=$category,
-            `latitude`='$latitude',
-            `longitude`='$longitude',
-            `address`='$address',
-            `state`='$state',
-            `city`='$city',
-            `pincode`='$pincode'
+            `remaining_qty`=$remaining_qty
              WHERE req_id=$id";
 
 
