@@ -30,7 +30,7 @@ if($isSeller=='true'){
         echo($conn->connect_error);
       }
 
-      $sql = "Select tn.transaction_id,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
+      $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
       transaction as tn INNER JOIN requirement_bid as bid ON tn.bid_id = bid.req_bid_id
       INNER JOIN requirement as req ON req.req_id = bid.req_id
       where tn.is_completed = 0 and tn.seller_id = $user_id and tn.is_product_bid=0";
@@ -54,7 +54,7 @@ if($isSeller=='true'){
       echo(json_encode($response_transaction));
 
 }else{
-  $sql = "Select tn.transaction_id,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
+  $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
   transaction as tn INNER JOIN requirement_bid as bid ON tn.bid_id = bid.req_bid_id
   INNER JOIN requirement as req ON req.req_id = bid.req_id
   where tn.is_completed = 0 and tn.buyer_id = $user_id and tn.is_product_bid=0 ";
