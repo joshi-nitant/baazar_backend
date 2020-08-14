@@ -24,7 +24,7 @@ if($isProduct=="true"){
   }
    else {
      $response = array('response_code' => 404, );
-     echo json_encode($conn->error);
+     echo json_encode($response);
   }
 }
 
@@ -32,7 +32,7 @@ else{
   $sql = "delete from requirement_bid where req_id=$id";
   if ($conn->query($sql) === TRUE) {
     $sql="delete  from requirement where req_id=$id";
-    if ($cn->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE) {
         $response = array('response_code' => 100, );
         echo json_encode($response);
      }

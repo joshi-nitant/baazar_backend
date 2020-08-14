@@ -24,7 +24,7 @@ while($i=mysqli_fetch_array($r,MYSQLI_ASSOC))
 $out=array();
 
 if(count($in)==0){
-	echo json_encode($conn->error);
+	echo json_encode("404");
 }else{
 	echo json_encode($in);
 }

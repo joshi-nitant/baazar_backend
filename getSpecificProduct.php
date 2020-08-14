@@ -28,8 +28,8 @@ $out=array();
 
 
 if(count($in)==0){
-  $response = array('data' => 404);
-	echo json_encode($in);
+
+	echo json_encode("404");
 }else{
   $response = array('data' => $in);
 	echo json_encode($in);
