@@ -14,7 +14,7 @@ require 'connection.php';
 $data = json_decode(file_get_contents('php://input'), true);
 $user_id = $data["id"];
 //echo($user_id);
-$sql = "Select * from user where user_id = $user_id";
+$sql = "Select user_id,name,contact,address,is_seller,state,city,pincode,latitude,longitude  from user where user_id = $user_id";
   if ($result = $conn->query($sql)) {
         $user=array();
 

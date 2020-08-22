@@ -55,7 +55,7 @@ if ($isSeller == "true") {
                         $sql = "Update requirement set remaining_qty = $remaining_qty_product where req_id=$req_id";
                         $conn->query($sql);
 
-                        $sql = "UPDATE PRODUCT SET remaining_qty = $remaining_qty where prod_id=$prod_id";
+                        $sql = "UPDATE product SET remaining_qty = $remaining_qty where prod_id=$prod_id";
                         if ($result = $conn->query($sql)) {
                             ///set is accepted to 1
                             $sql = "UPDATE product_bid SET is_accepted = 1 where prod_bid_id=$id";
@@ -76,7 +76,7 @@ if ($isSeller == "true") {
                             }
                         } else {
                             $response = array('response_code' => 404,);
-                            echo json_encode($response);
+                            echo json_encode($conn->error);
                         }
                     } else {
                         $response = array('response_code' => 406,);
