@@ -19,9 +19,19 @@ $category = $_POST['category'];
 // if ($conn->connect_error) {
 //   die("Connection failed: " . $conn->connect_error);
 // }
-
+///check for pan panCard
+$sql = "Select pan_card_status from user where user_id = $user_id";
+if($result = $conn->query($sql)){
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+	 if($row["pan_card_status"]==0){
+		 $response = array('response_code' => 409, );
+		 echo json_encode($response);
+		 exit();
+	 }
+}
 if($isSeller=="true"){
 	try{
+
     ////Check if the product is listed and has sufficent $amount
       $sql = "Select * from product where user_id=$user_id and category_id=$category";
       if($result = $conn->query($sql))

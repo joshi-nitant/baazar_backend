@@ -24,36 +24,48 @@ if(isset($_POST['pincode'])){
 }else{
   $pincode = -1;
 }
-
+$id = $_POST['id'];
 $city = $_POST['city'];
 $latitude = $_POST['latitude'];
 $longitude = $_POST['longitude'];
-
+$panCardStatus = $_POST['panCardStatus'];
 // $aadharCard = $_FILES['aadharCard']['name'];
-$panCard = $_FILES['panCard']['name'];
-$isSeller = $_POST['isSeller'];
+//$panCard = $_FILES['panCard']['name'];
 
-if($isSeller=="true"){
-  $isSeller=1;
+$isPanChanged = $_POST['isPanChanged'];
+if($isPanChanged=="true"){
+  $panCard = $_FILES['panCard']['name'];
 }else{
-  $isSeller=0;
+    $panCard = $_POST['panCard'];
 }
 
-$sql = "INSERT INTO `user`(`name`, `contact`, `address`,`is_seller`,`pan_card`, `state`, `city`, `pincode`, `latitude`, `longitude`)
-VALUES ('$username','$contact_number','$address',$isSeller,'$panCard','$state','$city','$pincode','$latitude','$longitude')";
+$sql = "UPDATE `user`
+ SET `name`='$username',
+ `contact`='$contact_number',
+ `address`='$address',
+ `pan_card`='$panCard',
+ `state`='$state',
+ `city`='$city',
+ `pincode`='$pincode',
+ `latitude`='$latitude',
+ `longitude`='$longitude',
+ `pan_card_status`=$panCardStatus
+ WHERE `user_id` = $id";
 
 
 if ($conn->query($sql) === TRUE) {
 			// $target_dir = "aadharCard/";
 			// $target_file = $target_dir . basename($_FILES["aadharCard"]["name"]);
 			// move_uploaded_file($_FILES["aadharCard"]["tmp_name"], $target_file);
+      if($isPanChanged=="true"){
+        $target_dir = "panCard/";
+        $target_file = $target_dir . basename($_FILES["panCard"]["name"]);
+        move_uploaded_file($_FILES["panCard"]["tmp_name"], $target_file);
+      }
 
-			$target_dir = "panCard/";
-			$target_file = $target_dir . basename($_FILES["panCard"]["name"]);
-			move_uploaded_file($_FILES["panCard"]["tmp_name"], $target_file);
-			$last_id = $conn->insert_id;
+		//	$last_id = $conn->insert_id;
 
-			$myArr = array("user_id"=>$last_id);
+			$myArr = array("response_code"=>101);
 			echo json_encode($myArr);
  } else {
       echo "Error: " . $sql . "<br>" . $conn->error;

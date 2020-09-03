@@ -11,6 +11,8 @@
 //     die("Connection failed: " . $conn->connect_error);
 // }
 require 'connection.php';
+require 'charges_management.php';
+
 $data = json_decode(file_get_contents('php://input'), true);
 $isSeller = $data['isSeller'];
 $id = $data['id'];
@@ -62,13 +64,25 @@ if ($isSeller == "true") {
                             $conn->query($sql);
 
 
-                            ///set data in the transaction
-                            $sql = "INSERT INTO `transaction`(`buyer_id`, `seller_id`, `bid_id`, `start_date`, `is_product_bid`)
-                VALUES ($buyer_id,$seller_id,$id,'$date_time',1)";
+                            $currentTime = time();
+                            $hoursToAdd = TRANSACTION_HOURS;
+
+                            //Convert the hours into seconds.
+                            $secondsToAdd = $hoursToAdd * (60 * 60);
+
+                            //Add the seconds onto the current Unix timestamp.
+                            $newTime = $currentTime + $secondsToAdd;
+
+                            //Print it out in a format that suits you.
+                            $endDate =  date("Y/m/d H:i:s", $newTime);
+
+                            $sql = "INSERT INTO `transaction`(`buyer_id`, `seller_id`, `bid_id`, `start_date`,`end_date`, `is_product_bid`)
+                VALUES ($buyer_id,$seller_id,$id,'$date_time','$endDate',1)";
 
 
                             if ($conn->query($sql)) {
-                                $response = array('response_code' => 101,);
+                                $last_id = mysqli_insert_id($conn);
+                                $response = array('response_code' => 101,'transaction_id'=>$last_id,'end_date'=>$endDate);
                                 echo json_encode($response);
                             } else {
                                 $response = array('response_code' => 404,);
@@ -136,11 +150,30 @@ if ($isSeller == "true") {
                             $conn->query($sql);
 
                             ////initaite transaction
-                            $sql = "INSERT INTO `transaction`(`buyer_id`, `seller_id`, `bid_id`, `start_date`, `is_product_bid`)
-                        VALUES ($buyer_id,$seller_id,$id,'$date_time',0)";
+                            // $date_time = new DateTime(); //current date/time
+                            // $date_time  ->add(new DateInterval("PT{TRANSACTION_HOURS}H"));
+                            // $endDate = $now->format('Y-m-d H:i:s');
+
+                            // $date_time = date("Y-m-d H:m:s");
+                            // $endDate = date("Y-m-d H:i:s", strtotime("+{TRANSACTION_HOURS} hours",strtotime($date_time)));
+                            // echo($endDate);
+                            $currentTime = time();
+                            $hoursToAdd = TRANSACTION_HOURS;
+
+                            //Convert the hours into seconds.
+                            $secondsToAdd = $hoursToAdd * (60 * 60);
+
+                            //Add the seconds onto the current Unix timestamp.
+                            $newTime = $currentTime + $secondsToAdd;
+
+                            //Print it out in a format that suits you.
+                            $endDate =  date("Y-m-d H:i:s", $newTime);
+
+                            $sql = "INSERT INTO `transaction`(`buyer_id`, `seller_id`, `bid_id`, `start_date`, `end_date`,`is_product_bid`)
+                        VALUES ($buyer_id,$seller_id,$id,'$date_time','$endDate',0)";
                             if ($conn->query($sql)) {
                               $last_id = mysqli_insert_id($conn);
-                                $response = array('response_code' => 101,'transaction_id'=>$last_id);
+                                $response = array('response_code' => 101,'transaction_id'=>$last_id,'end_date'=>$endDate);
                                 echo json_encode($response);
                             } else {
                                 $response = array('response_code' => 404,);

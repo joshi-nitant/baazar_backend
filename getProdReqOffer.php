@@ -11,6 +11,9 @@
 //   die("Connection failed: " . $conn->connect_error);
 // }
 require 'connection.php';
+require 'charges_management.php';
+
+
 $data = json_decode(file_get_contents('php://input'), true);
 $isSeller = $data["isSeller"];
 $user_id = $data["user_id"];
@@ -28,8 +31,11 @@ if($isSeller=="true"){
         {
           array_push($list_of_requirements,$row);
         }
-        //print_r($list_of_requirements);
-        echo json_encode($list_of_requirements);
+        $response_transaction = array();
+        $response_transaction['list'] = $list_of_requirements;
+        $response_transaction['DELIVERY_CHARGE_PER_KM'] = DELIVERY_CHARGE_PER_KM;
+        $response_transaction['TRANSACTION_CHARGE_PERCENTAGE'] = TRANSACTION_CHARGE_PERCENTAGE;
+        echo json_encode($response_transaction);
    } else {
         $response = array('response_code' => 404, );
         echo json_encode($conn->error);
@@ -50,8 +56,12 @@ if($isSeller=="true"){
             //echo($row);
             array_push($list_of_requirements,$row);
         }
-        //print($list_of_requirements);
-        echo json_encode($list_of_requirements);
+        $response_transaction = array();
+
+        $response_transaction['list'] = $list_of_requirements;
+        $response_transaction['DELIVERY_CHARGE_PER_KM'] = DELIVERY_CHARGE_PER_KM;
+        $response_transaction['TRANSACTION_CHARGE_PERCENTAGE'] = TRANSACTION_CHARGE_PERCENTAGE;
+        echo json_encode($response_transaction);
    } else {
         $response = array('response_code' => 404, );
         echo json_encode($conn->error);

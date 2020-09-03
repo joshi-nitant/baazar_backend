@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Aug 14, 2020 at 10:02 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.31
+-- Host: localhost
+-- Generation Time: Aug 31, 2020 at 01:57 PM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.0.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -38,10 +39,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`cat_id`, `category_name`, `category_image`) VALUES
-(1, 'Maize', 'maize.jpg'),
-(2, 'Castor', 'castor.jpg'),
-(3, 'Groundnut', 'ground_nut.jpg'),
-(4, 'Cotton', 'cotton.jpg');
+(1, 'Maize', 'maize.png'),
+(2, 'Castor', 'castor.png'),
+(3, 'Groundnut', 'ground_nut.png'),
+(4, 'Cotton', 'cotton.png');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,7 @@ CREATE TABLE `product` (
   `quantity` int(11) NOT NULL,
   `price_expected` decimal(6,2) NOT NULL,
   `breed` varchar(45) NOT NULL,
-  `is_accepted` tinyint(1) DEFAULT 0,
+  `is_accepted` tinyint(1) DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `image` varchar(500) NOT NULL,
@@ -107,7 +108,22 @@ INSERT INTO `product` (`prod_id`, `quality_certificate`, `quantity`, `price_expe
 (33, NULL, 50, '30.00', '500', 1, 38, 1, '9a2f7618-66eb-40ef-8ca1-567b8299c24e3839663114944302779.jpg', 0),
 (34, NULL, 50, '300.00', '200', 1, 40, 2, 'e6983a2b-55c9-4138-9093-daa8c13545e6769563660.jpg', 50),
 (35, NULL, 400, '500.00', '2300', 1, 45, 2, 'dafdeb87-b799-411f-bcf3-c8cdfe84da9f2437864881002466061.jpg', 0),
-(36, 'TEMP-PDF-Document.pdf', 60, '90.00', '2500', 1, 46, 2, '5d303f7a-7784-4ec6-ac0f-80eb7483b71f7494125471743212959.jpg', 10);
+(36, 'TEMP-PDF-Document.pdf', 60, '90.00', '2500', 1, 46, 2, '5d303f7a-7784-4ec6-ac0f-80eb7483b71f7494125471743212959.jpg', 10),
+(37, NULL, 500, '300.00', '3000', 0, 55, 2, 'e4e7b216-611e-4dfe-8133-7c63dbc2d6d4350533359.jpg', 500),
+(39, NULL, 500, '300.00', '500', 0, 58, 2, 'a4dadce6-8528-4538-bfc1-960ff51f50b71695371124.jpg', 450),
+(40, NULL, 886, '6.00', '3688', 0, 39, 2, '71d98d63-f029-4177-9ab2-39344f8dfa538506951202148451182.jpg', 886),
+(41, 'VID-20200814-WA0014.mp4', 1200, '200.00', '1300', 1, 71, 2, '7a549acc-2666-4df8-9484-88cec4bcc0de829951780404915371.jpg', 190),
+(42, NULL, 300, '300.00', '2300', 1, 71, 2, '43416f36-e895-457c-963c-67114893e07e3003625269333983174.jpg', 0),
+(43, 'Screenshot_2020-08-14-23-47-43-626_com.example.baazar.png', 500, '200.00', '1200', 1, 67, 2, '79d61438-ec0a-44dc-a1e6-921bdc31bfbb48368673.jpg', 310),
+(44, NULL, 25, '36.00', '55', 1, 68, 2, 'e57a9932-1f52-4412-ae09-972c09a9e49f8219951010928722466.jpg', 25),
+(47, NULL, 258, '258.00', '258', 1, 77, 4, 'a14a2376-f81a-41fa-b421-a53021e570215618296729148509402.jpg', 258),
+(48, NULL, 25, '100.00', '25', 1, 75, 1, '92955e71-2d70-4ad6-afe2-ed1c29165a737123791455606334257.jpg', 25),
+(49, NULL, 25, '1000.00', '2550', 1, 75, 2, 'e49edfaa-df14-4c8c-85b6-771b83eeecbc7327582591703514115.jpg', 25),
+(50, NULL, 500, '800.00', '1700', 0, 78, 2, '5d0bd113-26e1-4df5-89f3-0ffc00b4207d1278545385.jpg', 250),
+(51, NULL, 500, '150.00', '1300', 0, 80, 2, 'c73fb7bf-8b6b-4cee-8af6-5ed681efa9c15558559902456244481.jpg', 500),
+(53, NULL, 200, '5000.00', '1200', 0, 83, 1, '950c31d2-a02a-42f1-824f-191120a1b35e2691378746410880582.jpg', 200),
+(54, NULL, 122, '666.00', '1500', 0, 84, 3, '5f2582ea-1d34-42dc-a449-a3ee1fcdc453991362858655547045.jpg', 122),
+(55, NULL, 100, '100.00', '1200', 0, 85, 1, 'ff4ce5ab-b81f-4337-b87c-168452ae0817218226641.jpg', 100);
 
 -- --------------------------------------------------------
 
@@ -121,7 +137,7 @@ CREATE TABLE `product_bid` (
   `product_id` int(11) NOT NULL,
   `bid_price` decimal(6,2) NOT NULL,
   `bid_quantity` int(11) NOT NULL,
-  `is_accepted` tinyint(1) NOT NULL DEFAULT 0
+  `is_accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -156,7 +172,23 @@ INSERT INTO `product_bid` (`prod_bid_id`, `user_id`, `product_id`, `bid_price`, 
 (28, 41, 36, '200.00', 10, 0),
 (29, 41, 36, '200.00', 10, 0),
 (30, 41, 36, '90.00', 10, 0),
-(31, 41, 36, '90.00', 10, 0);
+(31, 41, 36, '90.00', 10, 0),
+(32, 59, 36, '50.00', 10, 0),
+(33, 63, 14, '100.00', 20, 0),
+(34, 63, 10, '500.00', 10, 0),
+(35, 66, 12, '10.00', 10, 0),
+(36, 71, 9, '500.00', 20, 0),
+(37, 71, 41, '150.00', 150, 0),
+(39, 71, 42, '300.00', 300, 1),
+(41, 71, 41, '100.00', 10, 1),
+(44, 75, 12, '2525.00', 25, 0),
+(45, 75, 3, '9999.99', 100, 0),
+(46, 67, 41, '210.00', 58, 0),
+(47, 66, 14, '1.00', 90, 0),
+(48, 63, 44, '20.00', 10, 0),
+(49, 82, 14, '3000.00', 10, 0),
+(50, 82, 10, '60.00', 100, 0),
+(51, 85, 3, '100.00', 50, 0);
 
 -- --------------------------------------------------------
 
@@ -171,7 +203,7 @@ CREATE TABLE `requirement` (
   `price_expected` decimal(6,2) NOT NULL,
   `breed` varchar(45) NOT NULL,
   `category` int(11) NOT NULL,
-  `is_accepted` tinyint(1) NOT NULL DEFAULT 0,
+  `is_accepted` tinyint(1) NOT NULL DEFAULT '0',
   `remaining_qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -207,7 +239,52 @@ INSERT INTO `requirement` (`req_id`, `user_id`, `quantity`, `price_expected`, `b
 (27, 38, 200, '30.00', '500', 1, 1, 100),
 (28, 39, 94949, '9999.99', '911', 2, 0, 94949),
 (30, 45, 500, '600.00', '2300', 2, 1, 100),
-(31, 46, 100, '300.00', '2500', 2, 1, 0);
+(31, 46, 100, '300.00', '2500', 2, 1, 0),
+(32, 52, 30, '60.00', '500', 2, 0, 30),
+(33, 52, 30, '60.00', '500', 2, 0, 30),
+(34, 52, 30, '60.00', '500', 2, 0, 30),
+(35, 52, 30, '60.00', '500', 2, 0, 30),
+(36, 52, 30, '60.00', '500', 2, 0, 30),
+(37, 52, 30, '60.00', '500', 2, 0, 30),
+(38, 52, 30, '60.00', '500', 2, 0, 30),
+(39, 52, 30, '60.00', '500', 2, 0, 30),
+(40, 52, 300, '50.00', '100', 2, 0, 300),
+(41, 52, 500, '30.00', '200', 2, 0, 500),
+(42, 52, 500, '30.00', '200', 2, 0, 500),
+(43, 52, 500, '30.00', '200', 2, 0, 500),
+(44, 52, 50, '60.00', '200', 2, 0, 50),
+(45, 52, 50, '60.00', '200', 2, 0, 50),
+(46, 52, 50, '60.00', '200', 2, 0, 50),
+(47, 52, 20, '60.00', '500', 2, 0, 20),
+(48, 52, 50, '200.00', '30', 2, 0, 50),
+(49, 53, 50, '300.00', '2300', 1, 0, 50),
+(50, 53, 50, '300.00', '2300', 1, 0, 50),
+(51, 53, 50, '300.00', '2300', 1, 0, 50),
+(52, 53, 50, '300.00', '2300', 1, 0, 50),
+(53, 53, 50, '300.00', '2300', 1, 1, 50),
+(54, 53, 50, '300.00', '2300', 1, 0, 50),
+(55, 53, 50, '300.00', '2300', 1, 0, 50),
+(56, 53, 50, '300.00', '2300', 1, 0, 50),
+(57, 53, 50, '300.00', '2300', 1, 0, 50),
+(58, 55, 50, '60.00', '2300', 2, 0, 50),
+(59, 55, 50, '60.00', '2300', 2, 0, 50),
+(60, 55, 30, '50.00', '2500', 2, 0, 30),
+(61, 58, 200, '300.00', '1300', 2, 1, 50),
+(62, 59, 300, '500.00', '500', 4, 0, 250),
+(63, 60, 30, '600.00', '120', 2, 1, 30),
+(64, 60, 20, '600.00', '2003', 2, 0, 20),
+(65, 71, 500, '300.00', '500', 2, 1, 70),
+(66, 71, 500, '500.00', '1000', 2, 1, 500),
+(67, 66, 1, '1.00', '5', 2, 0, 1),
+(68, 67, 200, '200.00', '5580', 2, 1, 10),
+(69, 69, 2000000, '9999.99', '342', 4, 1, 2000000),
+(71, 67, 25, '54.00', '21', 2, 1, 25),
+(72, 77, 50, '258.00', '50', 4, 1, 50),
+(73, 75, 25, '100.00', '2', 1, 1, 25),
+(74, 78, 500, '600.00', '1700', 2, 1, 250),
+(75, 63, 70, '70.00', '1300', 2, 0, 70),
+(76, 81, 50, '5000.00', '1400', 4, 0, 50),
+(77, 86, 5800, '600.00', '1400', 2, 0, 5800);
 
 -- --------------------------------------------------------
 
@@ -222,7 +299,7 @@ CREATE TABLE `requirement_bid` (
   `bid_price` decimal(6,2) NOT NULL,
   `bid_quantity` int(11) NOT NULL,
   `bid_days` int(11) NOT NULL,
-  `is_accepted` tinyint(1) NOT NULL DEFAULT 0
+  `is_accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -245,7 +322,15 @@ INSERT INTO `requirement_bid` (`req_bid_id`, `user_id`, `req_id`, `bid_price`, `
 (16, 34, 23, '90.00', 50, 0, 1),
 (17, 37, 26, '60.00', 20, 0, 1),
 (18, 38, 27, '20.00', 50, 0, 1),
-(19, 45, 30, '400.00', 400, 0, 1);
+(19, 45, 30, '400.00', 400, 0, 1),
+(20, 55, 24, '220.00', 20, 0, 0),
+(21, 55, 24, '220.00', 20, 0, 0),
+(22, 55, 24, '220.00', 20, 0, 0),
+(23, 55, 24, '220.00', 20, 0, 0),
+(24, 58, 61, '320.00', 50, 0, 1),
+(25, 67, 14, '105.00', 90, 0, 0),
+(26, 67, 68, '195.00', 190, 0, 1),
+(27, 78, 74, '400.00', 250, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -260,7 +345,7 @@ CREATE TABLE `transaction` (
   `bid_id` int(11) NOT NULL,
   `start_date` datetime NOT NULL,
   `is_product_bid` tinyint(1) DEFAULT NULL,
-  `is_completed` tinyint(1) NOT NULL DEFAULT 0,
+  `is_completed` tinyint(1) NOT NULL DEFAULT '0',
   `end_date` datetime DEFAULT NULL,
   `razorpay_payment_id` varchar(500) DEFAULT NULL,
   `razorpay_order_id` varchar(500) DEFAULT NULL,
@@ -291,7 +376,12 @@ INSERT INTO `transaction` (`transaction_id`, `buyer_id`, `seller_id`, `bid_id`, 
 (11, 38, 38, 15, '2020-08-10 17:03:38', 1, 1, '2020-08-10 17:04:18', 'pay_FP6Qs5zb3u8HQf', '', '', 0, 0, 30, 1530, 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 1500),
 (12, 45, 45, 19, '2020-08-10 21:52:58', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (13, 46, 46, 20, '2020-08-10 22:02:45', 0, 1, '2020-08-10 22:03:48', 'pay_FPBXCq4sOnyLKT', '', '', 54, 0, 30, 11684, 'Gondal Chowkdi, Vavdi, Rajkot, Gujarat 360004, India', 11600),
-(14, 46, 46, 17, '2020-08-10 22:06:56', 1, 1, '2020-08-10 22:08:15', 'pay_FPBbvudgbXLlTK', '', '', 0, 0, 30, 3030, 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 3000);
+(14, 46, 46, 17, '2020-08-10 22:06:56', 1, 1, '2020-08-10 22:08:15', 'pay_FPBbvudgbXLlTK', '', '', 0, 0, 30, 3030, 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 3000),
+(15, 58, 58, 24, '2020-08-14 14:12:46', 0, 1, '2020-08-14 14:13:30', 'pay_FQdeuG2oGsP75B', '', '', 0, 0, 30, 16030, 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 16000),
+(16, 67, 67, 26, '2020-08-14 20:39:23', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 71, 71, 41, '2020-08-14 21:17:55', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 71, 71, 39, '2020-08-14 21:18:55', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 78, 78, 27, '2020-08-19 17:50:59', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -310,60 +400,101 @@ CREATE TABLE `user` (
   `city` varchar(100) NOT NULL,
   `pincode` varchar(100) NOT NULL,
   `latitude` varchar(100) NOT NULL,
-  `longitude` varchar(100) NOT NULL
+  `longitude` varchar(100) NOT NULL,
+  `pan_card_status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `name`, `contact`, `address`, `is_seller`, `pan_card`, `state`, `city`, `pincode`, `latitude`, `longitude`) VALUES
-(1, 'Nitant	', '846068847	', '\"Maa\"\"', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(2, 'Nitant Joshi	', '123456789	', '\"123,\"xyz', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(3, 'nitant	', '8460688847	', '123, XYZ City,', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(4, 'Nitant Joshi	', '8460688847	', '\"123\",XYZ City ', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(5, 'nitant joshi	', '8460688847	', 'Maa , Gundala Road	', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(6, 'nitant joshi	', '8460688847	', '\"Make\", Gundala Road	', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(7, '1', '1', '1', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(8, '12', '1', '1', 0, 'TEMP-PDF-Document.pdf', '', '', '', '', ''),
-(9, 'Nitant Joshi', '8460688847', 'Maa gundala road', 1, 'IMG-20200725-WA0013.jpg', '', '', '', '', ''),
-(10, 'હોઈ', '84606', '1', 0, 'Screenshot_2020-06-23-16-11-57-505_lockscreen.png', '', '', '', '', ''),
-(11, 'nitant', '846068994777', 'maaa', 1, 'IMG-20200725-WA0013.jpg', '', '', '', '', ''),
-(12, 'krishna', '8460688847', '123', 1, 'IMG-20200726-WA0011.jpg', '', 'Bhavnagar', '', '88.41199280000001', '22.5123488'),
-(13, 'pooja', '8460688847', 'jig', 1, 'Screenshot_20200729-171931.jpeg', '', 'Surat', '', '88.41199280000001', '22.5123488'),
-(14, 'nitant', '8460688847', '', 1, 'Screenshot_20200729-234544.jpeg', 'Karnataka', 'Bangalore Urban', '', '12.9921674', '77.55707640000003'),
-(15, 'nitant', '8460688847', '', 1, 'Screenshot_20200729-234544.jpeg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003'),
-(16, 'Nitant Joshi', '7359479347', '', 1, 'Screenshot_20200729-234500.jpeg', 'West Bengal', 'Kolkata', '-1', '22.5123488', '88.41199280000001'),
-(17, 'Xyz', '8460688847', '', 1, 'Screenshot_20200729-205429.jpeg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(18, 'Vedant Nalo', '', 'Gundala Rd, Mani Nagar, Gundala, Gondal, Gujarat 360311, India', 1, 'Nitant Joshi - Introduce Yourself.pdf', 'Gujarat', 'Rajkot', '-1', '21.9610844', '70.786934'),
-(19, 'vedant nalo 2', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 1, 'IMG-20200730-WA0022.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(20, 'Vedant Nalo 3', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 1, 'IMG-20200730-WA0022.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(21, 'Demo name', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 1, 'Screenshot_20200731-005543.jpeg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999'),
-(22, 'demo user name', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 1, 'Screenshot_20200731-014938.jpeg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003'),
-(23, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(24, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(25, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(26, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(27, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(28, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(29, 'jadyo', '8460688847', 'Gonda Railway Station Marg, Semra Damman, Gonda, Uttar Pradesh 271002, India', 0, 'IMG-20200806-WA0026.jpg', 'Uttar Pradesh', 'Gonda', '-1', '27.1538758', '81.97610020000002'),
-(30, 'Nitant', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG-20200809-WA0013.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999'),
-(31, 'demo app', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'IMG-20200809-WA0001.jpg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003'),
-(32, 'Nitant joshi', '8460688847', 'Gonda Railway Station Marg, Semra Damman, Gonda, Uttar Pradesh 271002, India', 0, 'IMG-20200809-WA0013.jpg', 'Uttar Pradesh', 'Gonda', '-1', '27.1538758', '81.97610020000002'),
-(33, 'Nitant', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200809-WA0011.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(34, 'nitant joshi', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200809-WA0013.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(35, 'Nitant', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'Nitant Joshi - Introduce Yourself.pdf', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003'),
-(36, 'vedant', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200810-WA0011.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(37, 'Nitant jadyo', '9723166877', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'CE083_Lab3.pdf', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922'),
-(38, 'vednat jozhi', '7359479347', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG_20200810_200705_847.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999'),
-(39, 'gjjvb', '7359479347', 'Gondal, Gujarat 360311, India', 0, 'IMG-20200810-WA0014.jpg', 'Gujarat', 'Rajkot', '-1', '21.9611708', '70.7938777'),
-(40, 'ysdjwdvj', '8460688847', 'Jasdan - Vinchhiya Rd, Anand Dham Society, Vajsurpara, Jasdan, Gujarat, India', 1, 'IMG-20200810-WA0017.jpg', 'Gujarat', 'Rajkot', '-1', '22.0507638', '71.21894019999999'),
-(41, 'nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'LAB_Submission_Deadlines.pdf', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999'),
-(42, 'nitant', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999'),
-(43, 'nihh', '8460688847', 'Rajahmundry, Andhra Pradesh, India', 0, 'TEMP-PDF-Document.pdf', 'Andhra Pradesh', 'East Godavari', '-1', '17.0005383', '81.8040345'),
-(44, 'fddg', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'TEMP-PDF-Document.pdf', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003'),
-(45, 'nitant', '8460688847', 'Rajkot Marketing Yard, Marketing Yard, Rajkot, Gujarat 360003, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.3004472', '70.8346048'),
-(46, 'nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999');
+INSERT INTO `user` (`user_id`, `name`, `contact`, `address`, `is_seller`, `pan_card`, `state`, `city`, `pincode`, `latitude`, `longitude`, `pan_card_status`) VALUES
+(1, 'Nitant	', '846068847	', '\"Maa\"\"', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(2, 'Nitant Joshi	', '123456789	', '\"123,\"xyz', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(3, 'nitant	', '8460688847	', '123, XYZ City,', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(4, 'Nitant Joshi	', '8460688847	', '\"123\",XYZ City ', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(5, 'nitant joshi	', '8460688847	', 'Maa , Gundala Road	', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(6, 'nitant joshi	', '8460688847	', '\"Make\", Gundala Road	', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(7, '1', '1', '1', 1, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(8, '12', '1', '1', 0, 'TEMP-PDF-Document.pdf', '', '', '', '', '', 0),
+(9, 'Nitant Joshi', '8460688847', 'Maa gundala road', 1, 'IMG-20200725-WA0013.jpg', '', '', '', '', '', 0),
+(10, 'હોઈ', '84606', '1', 0, 'Screenshot_2020-06-23-16-11-57-505_lockscreen.png', '', '', '', '', '', 0),
+(11, 'nitant', '846068994777', 'maaa', 1, 'IMG-20200725-WA0013.jpg', '', '', '', '', '', 0),
+(12, 'krishna', '8460688847', '123', 1, 'IMG-20200726-WA0011.jpg', '', 'Bhavnagar', '', '88.41199280000001', '22.5123488', 0),
+(13, 'pooja', '8460688847', 'jig', 1, 'Screenshot_20200729-171931.jpeg', '', 'Surat', '', '88.41199280000001', '22.5123488', 0),
+(14, 'nitant', '8460688847', '', 1, 'Screenshot_20200729-234544.jpeg', 'Karnataka', 'Bangalore Urban', '', '12.9921674', '77.55707640000003', 0),
+(15, 'nitant', '8460688847', '', 1, 'Screenshot_20200729-234544.jpeg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(16, 'Nitant Joshi', '7359479347', '', 1, 'Screenshot_20200729-234500.jpeg', 'West Bengal', 'Kolkata', '-1', '22.5123488', '88.41199280000001', 0),
+(17, 'Xyz', '8460688847', '', 1, 'Screenshot_20200729-205429.jpeg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(18, 'Vedant Nalo', '', 'Gundala Rd, Mani Nagar, Gundala, Gondal, Gujarat 360311, India', 1, 'Nitant Joshi - Introduce Yourself.pdf', 'Gujarat', 'Rajkot', '-1', '21.9610844', '70.786934', 0),
+(19, 'vedant nalo 2', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 1, 'IMG-20200730-WA0022.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(20, 'Vedant Nalo 3', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 1, 'IMG-20200730-WA0022.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(21, 'Demo name', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 1, 'Screenshot_20200731-005543.jpeg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(22, 'demo user name', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 1, 'Screenshot_20200731-014938.jpeg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(23, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(24, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(25, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(26, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(27, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(28, 'Nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200806-WA0028.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(29, 'jadyo', '8460688847', 'Gonda Railway Station Marg, Semra Damman, Gonda, Uttar Pradesh 271002, India', 0, 'IMG-20200806-WA0026.jpg', 'Uttar Pradesh', 'Gonda', '-1', '27.1538758', '81.97610020000002', 0),
+(30, 'Nitant', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG-20200809-WA0013.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(31, 'demo app', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'IMG-20200809-WA0001.jpg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(32, 'Nitant joshi', '8460688847', 'Gonda Railway Station Marg, Semra Damman, Gonda, Uttar Pradesh 271002, India', 0, 'IMG-20200809-WA0013.jpg', 'Uttar Pradesh', 'Gonda', '-1', '27.1538758', '81.97610020000002', 0),
+(33, 'Nitant', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200809-WA0011.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(34, 'nitant joshi', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200809-WA0013.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(35, 'Nitant', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'Nitant Joshi - Introduce Yourself.pdf', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(36, 'vedant', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200810-WA0011.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(37, 'Nitant jadyo', '9723166877', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'CE083_Lab3.pdf', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(38, 'vednat jozhi', '7359479347', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG_20200810_200705_847.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(39, 'gjjvb', '7359479347', 'Gondal, Gujarat 360311, India', 0, 'IMG-20200810-WA0014.jpg', 'Gujarat', 'Rajkot', '-1', '21.9611708', '70.7938777', 0),
+(40, 'ysdjwdvj', '8460688847', 'Jasdan - Vinchhiya Rd, Anand Dham Society, Vajsurpara, Jasdan, Gujarat, India', 1, 'IMG-20200810-WA0017.jpg', 'Gujarat', 'Rajkot', '-1', '22.0507638', '71.21894019999999', 0),
+(41, 'nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'LAB_Submission_Deadlines.pdf', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(42, 'nitant', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(43, 'nihh', '8460688847', 'Rajahmundry, Andhra Pradesh, India', 0, 'TEMP-PDF-Document.pdf', 'Andhra Pradesh', 'East Godavari', '-1', '17.0005383', '81.8040345', 0),
+(44, 'fddg', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 0, 'TEMP-PDF-Document.pdf', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(45, 'nitant', '8460688847', 'Rajkot Marketing Yard, Marketing Yard, Rajkot, Gujarat 360003, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.3004472', '70.8346048', 0),
+(46, 'nitant', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'TEMP-PDF-Document.pdf', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(47, 'krishna', '1122334455', 'Rajkot, Gujarat, India', 0, 'Screenshot_20200814-150907.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(48, 'krishna', '7203013803', 'Rajkot, Gujarat, India', 0, 'Screenshot_20200814-150907.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(49, 'krishna', '7203013803', 'Rajkot, Gujarat, India', 0, 'Screenshot_20200814-150907.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(50, 'krishna', '7203013803', 'Rajkot, Gujarat, India', 0, 'Screenshot_20200814-150907.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(51, 'Nitant', '8460688847', 'Gondal Chokdi, Samrat Industrial Area, Rajkot, Gujarat 360004, India', 0, 'IMG-20200814-WA0006.jpg', 'Gujarat', 'Rajkot', '-1', '22.2432367', '70.7999567', 0),
+(52, 'Nitant', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG-20200814-WA0006.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(53, 'Krishna', '8460688847', 'Gondal Chokdi, Samrat Industrial Area, Rajkot, Gujarat 360004, India', 0, 'IMG-20200814-WA0005.jpg', 'Gujarat', 'Rajkot', '-1', '22.2432367', '70.7999567', 0),
+(54, 'Krishna', '8460688847', 'Gondal Chokdi, Samrat Industrial Area, Rajkot, Gujarat 360004, India', 0, 'IMG-20200814-WA0005.jpg', 'Gujarat', 'Rajkot', '-1', '22.2432367', '70.7999567', 0),
+(55, 'Krishna', '8460688847', 'Gondal Chokdi, Samrat Industrial Area, Rajkot, Gujarat 360004, India', 0, 'IMG-20200814-WA0005.jpg', 'Gujarat', 'Rajkot', '-1', '22.2432367', '70.7999567', 0),
+(56, 'Parth', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200814-WA0007.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(57, 'Arth', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200814-WA0008.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(58, 'Arth', '9723166877', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'Submission_Status.pdf', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(59, 'true nitant', '8460688847', 'Gondal Rd, Vijay Plot, Bhakti Nagar, Rajkot, Gujarat, India', 0, 'IMG-20200814-WA0020.jpg', 'Gujarat', 'Rajkot', '-1', '22.2865849', '70.8000922', 0),
+(60, 'Harsh', '7567562586', 'Gondal, Gujarat 360311, India', 0, 'IMG-20200814-WA0001.jpg', 'Gujarat', 'Rajkot', '-1', '21.9611708', '70.7938777', 0),
+(61, 'Niraj gohel', '7016174611', 'India', 0, 'Submission_Status.pdf', '', '', '-1', '20.593684', '78.96287999999998', 0),
+(62, 'Niraj gohel', '7016174611', 'India', 0, 'Submission_Status.pdf', '', '', '-1', '20.593684', '78.96287999999998', 0),
+(63, 'Krishna', '7203013803', 'Rajkot, Gujarat, India', 0, 'IMG-20200814-WA0032.jpg', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(64, 'Niraj gohel', '7016174611', 'India', 1, 'IMG-20200814-WA0014.jpg', '', '', '-1', '20.593684', '78.96287999999998', 0),
+(65, 'Niraj gohel', '7016174611', 'India', 1, 'IMG-20200814-WA0014.jpg', '', '', '-1', '20.593684', '78.96287999999998', 0),
+(66, 'Niraj gohel', '7016174611', 'Rajkot, Gujarat, India', 1, 'IMG-20200814-WA0014.jpg', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(67, 'jeet', '9429476270', 'Himatnagar, Gujarat, India', 1, 'hqdefault.jpg', 'Gujarat', 'Sabarkatha', '-1', '23.5968857', '72.9630378', 0),
+(68, 'parth', '8780853473', 'Gondal, Gujarat 360311, India', 1, 'IMG-20200814-WA0051.jpg', 'Gujarat', 'Rajkot', '-1', '21.9611708', '70.7938777', 0),
+(69, 'Adishwar', '9104755525', 'Ahmedabad, Gujarat, India', 0, '20200814_014945.jpg', 'Gujarat', 'Ahmedabad', '-1', '23.022505', '72.57136209999999', 0),
+(70, 'utsuu', '9714476861', 'Rajkot, Gujarat, India', 1, 'Screenshot_2020-08-13-17-48-41-32.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(71, 'vedant 234', '8460688847', 'Chotto Chandpur, Bishnupur, Kalikapur, West Bengal 700135, India', 0, 'IMG-20200814-WA0039.jpg', 'West Bengal', 'North 24 Parganas', '-1', '22.5921041', '88.50879270000001', 0),
+(72, 'jsksks', '8460688847', 'Dr Rajkumar Rd, Prakash Nagar, Rajajinagar, Bengaluru, Karnataka, India', 1, 'IMG-20200815-WA0012.jpg', 'Karnataka', 'Bangalore Urban', '-1', '12.9921674', '77.55707640000003', 0),
+(73, 'jjdjs', '8460688847', 'Rajkot Airport, Gandhigram Civil Aerodrome, Gandhigram, Rajkot, Gujarat 360006, India', 0, 'IMG-20200815-WA0012.jpg', 'Gujarat', 'Rajkot', '-1', '22.3089497', '70.78226409999999', 0),
+(74, 'test', '8460688847', 'Rajkot S.T Bus Stand, Karanpara, Rajkot, Gujarat 360001, India', 0, 'IMG-20200815-WA0009.jpg', 'Gujarat', 'Rajkot', '-1', '22.29147', '70.80187799999999', 0),
+(75, '*\"*', '9727089755', 'Ahmedabad, Gujarat, India', 1, 'IMG-20200815-WA0004.jpg', 'Gujarat', 'Ahmedabad', '-1', '23.022505', '72.57136209999999', 0),
+(76, 'Abhishek', '8306859897', 'Ahmedabad, Gujarat, India', 1, 'logo_whitesmall-1.png', 'Gujarat', 'Ahmedabad', '-1', '23.022505', '72.57136209999999', 0),
+(77, 'ruts', '7016189551', 'Ahmedabad, Gujarat, India', 0, 'Screenshot_2020-08-16-13-03-26-948_com.google.android.youtube.jpg', 'Gujarat', 'Ahmedabad', '-1', '23.022505', '72.57136209999999', 0),
+(78, 'vedantjoshi', '8460688847', 'Gondal Chowkdi, Vavdi, Rajkot, Gujarat 360004, India', 0, 'Screenshot_20200819-204759.jpeg', 'Gujarat', 'Rajkot', '-1', '22.2424733', '70.8001227', 0),
+(79, 'fgjj', '8460688847', 'Ved Rd, Sahyog Society, Vishal Nagar, Surat, Gujarat, India', 0, 'IMG-20200822-WA0008.jpeg', 'Gujarat', 'Surat', '-1', '21.2395149', '72.8201152', 0),
+(80, 'harsh patel', '9913030121', 'Himatnagar, Gujarat, India', 1, 'Screenshot_2020-08-23-11-29-51-288_com.example.baazar.jpg', 'Gujarat', 'Sabarkatha', '-1', '23.5968857', '72.9630378', 0),
+(81, 'rutvik', '7016189551', 'Himatnagar, Gujarat, India', 0, 'IMG-20200823-WA0000.jpg', 'Gujarat', 'Sabarkatha', '-1', '23.5968857', '72.9630378', 0),
+(82, 'Abhishek', '8306859897', 'Shahibaug Rd, Ahmedabad, Gujarat, India', 1, 'Ethereum_logo_gold.png', 'Gujarat', 'Ahmedabad', '-1', '23.0563869', '72.5979352', 0),
+(83, 'sakina Tajani', '7285091852', 'Rajkot, Gujarat, India', 1, 'Screenshot_20200826-090859.jpg', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(84, 'Sakina Tajani', '7285091852', 'Rajkot, Gujarat, India', 1, 'Screenshot_20200826-092050.jpg', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0),
+(85, 'shah', '9119228549', 'Ahmedabad, Gujarat, India', 1, 'IMG-20200829-WA0001.jpg', 'Gujarat', 'Ahmedabad', '-1', '23.022505', '72.57136209999999', 0),
+(86, 'ggjj', '8460688847', 'Rajkot, Gujarat, India', 0, 'Screenshot_2020-08-29-10-25-51-612_lockscreen.png', 'Gujarat', 'Rajkot', '-1', '22.3038945', '70.80215989999999', 0);
 
 --
 -- Indexes for dumped tables
@@ -448,37 +579,37 @@ ALTER TABLE `category_breed`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `product_bid`
 --
 ALTER TABLE `product_bid`
-  MODIFY `prod_bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `prod_bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `requirement`
 --
 ALTER TABLE `requirement`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `requirement_bid`
 --
 ALTER TABLE `requirement_bid`
-  MODIFY `req_bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `req_bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- Constraints for dumped tables

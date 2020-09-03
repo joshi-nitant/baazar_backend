@@ -66,32 +66,16 @@ if($isSeller=="true"){
 }else{
 	try{
     //echo var_dump($_POST);
-	$sql = "Select pan_card_status from user where user_id = $user_id";
+		$sql ="INSERT INTO `requirement`(`user_id`, `quantity`, `price_expected`, `breed`, `category`,`remaining_qty`)
+    VALUES ($user_id,$quantity,$price,'$breed',$category,$quantity)";
 
-	if($result = $conn->query($sql)){
-			 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-				if($row["pan_card_status"]==1){
-					$sql ="INSERT INTO `requirement`(`user_id`, `quantity`, `price_expected`, `breed`, `category`,`remaining_qty`)
-					VALUES ($user_id,$quantity,$price,'$breed',$category,$quantity)";
-
-					if ($conn->query($sql) === TRUE) {
-							$response = array('response_code' => 100, );
-							echo json_encode($response);
-					 } else {
-						 $response = array('response_code' => 404, );
-						 echo json_encode($conn->error);
-					}
-				}else{
-					$response = array('response_code' => 409, );
-						echo json_encode($response);
-				}
-
-
-	}else {
-		$response = array('response_code' => 404, );
-		echo json_encode($conn->error);
- }
-
+		if ($conn->query($sql) === TRUE) {
+        $response = array('response_code' => 100, );
+        echo json_encode($response);
+	   } else {
+       $response = array('response_code' => 404, );
+       echo json_encode($conn->error);
+		}
 
 	}
 	catch(Exception $e) {

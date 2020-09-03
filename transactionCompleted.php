@@ -25,9 +25,11 @@ $razorpay_order_id = $data['razorpay_order_id'];
 $razorpay_signature = $data['razorpay_signature'];
 $date_accepted = date("Y-m-d H:i:s");
 
+
 $sql = "UPDATE `transaction` SET
-`is_completed`=1,
-`end_date`='$date_accepted',
+`is_completed`=0,
+`delivery_status`=1,
+`complete_date`='$date_accepted',
 `razorpay_payment_id`='$razorpay_payment_id',
 `razorpay_order_id`='$razorpay_order_id',
 `razorpay_signature`='$razorpay_signature',

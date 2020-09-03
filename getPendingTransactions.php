@@ -7,6 +7,8 @@
 //
 // $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME, $DB_PORT);
 require 'connection.php';
+require 'charges_management.php';
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -15,7 +17,7 @@ $isSeller = $data['isSeller'];
 $user_id = $data['user_id'];
 
 if($isSeller=='true'){
-      $sql = "Select tn.*,prod.*,bid.prod_bid_id,bid.bid_price,bid.bid_quantity,bid.product_id,bid.user_id as bid_user_id from
+      $sql = "Select tn.*,prod.*,bid.prod_bid_id,bid.bid_price,bid.bid_quantity,bid.product_id,bid.user_id as bid_user_id,bid.packaging_charges,bid.delivery_days  from
       transaction as tn INNER JOIN product_bid as bid ON tn.bid_id = bid.prod_bid_id
       INNER JOIN product as prod ON prod.prod_id = bid.product_id
       where is_completed = 0 and seller_id = $user_id and is_product_bid=1";
@@ -30,7 +32,7 @@ if($isSeller=='true'){
         echo($conn->connect_error);
       }
 
-      $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
+      $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id,bid.packaging_charges,bid.delivery_days  from
       transaction as tn INNER JOIN requirement_bid as bid ON tn.bid_id = bid.req_bid_id
       INNER JOIN requirement as req ON req.req_id = bid.req_id
       where tn.is_completed = 0 and tn.seller_id = $user_id and tn.is_product_bid=0";
@@ -51,10 +53,12 @@ if($isSeller=='true'){
       if($list_of_transaction_product){
           $response_transaction['transaction_product'] = $list_of_transaction_product;
       }
+      $response_transaction['DELIVERY_CHARGE_PER_KM'] = DELIVERY_CHARGE_PER_KM;
+      $response_transaction['TRANSACTION_CHARGE_PERCENTAGE'] = TRANSACTION_CHARGE_PERCENTAGE;
       echo(json_encode($response_transaction));
 
 }else{
-  $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id as bid_user_id from
+  $sql = "Select tn.*,req.*,bid.req_bid_id,bid.bid_price,bid.bid_quantity,bid.req_id,bid.user_id  as bid_user_id,bid.packaging_charges,bid.delivery_days  from
   transaction as tn INNER JOIN requirement_bid as bid ON tn.bid_id = bid.req_bid_id
   INNER JOIN requirement as req ON req.req_id = bid.req_id
   where tn.is_completed = 0 and tn.buyer_id = $user_id and tn.is_product_bid=0 ";
@@ -68,7 +72,8 @@ if($isSeller=='true'){
     $list_of_transaction_requirement = false;
     echo json_encode($conn->error);
   }
-  $sql = "Select tn.*,prod.*,bid.prod_bid_id,bid.bid_price,bid.bid_quantity,bid.product_id,bid.user_id as bid_user_id from
+
+  $sql = "Select tn.*,prod.*,bid.prod_bid_id,bid.bid_price,bid.bid_quantity,bid.product_id,bid.packaging_charges,bid.delivery_days,bid.user_id as bid_user_id from
   transaction as tn INNER JOIN product_bid as bid ON tn.bid_id = bid.prod_bid_id
   INNER JOIN product as prod ON prod.prod_id = bid.product_id
   where tn.is_completed = 0 and tn.buyer_id = $user_id and tn.is_product_bid=1";
@@ -82,13 +87,18 @@ if($isSeller=='true'){
         echo json_encode($conn->error);
   }
   $response_transaction = array();
+
   if($list_of_transaction_requirement){
     $response_transaction['transaction_requirement'] = $list_of_transaction_requirement;
   }
   if($list_of_transaction_product){
       $response_transaction['transaction_product'] = $list_of_transaction_product;
   }
-  echo(json_encode($response_transaction));
+
+  $response_transaction['DELIVERY_CHARGE_PER_KM'] = DELIVERY_CHARGE_PER_KM;
+  $response_transaction['TRANSACTION_CHARGE_PERCENTAGE'] = TRANSACTION_CHARGE_PERCENTAGE;
+    echo json_encode($response_transaction);
+
 }
 $conn->close();
 ?>
