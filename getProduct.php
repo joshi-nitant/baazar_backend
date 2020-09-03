@@ -13,7 +13,7 @@ require 'charges_management.php';
 $data = json_decode(file_get_contents('php://input'), true);
 $cat_id = $data['cat_id'];
 
-$q="select * from product where is_accepted=1 and category_id = '$cat_id'";
+$q="select * from product as prod,user as u where is_accepted=1 and category_id = '$cat_id' and prod.user_id = u.user_id";
 $r=mysqli_query($conn,$q)   or die( mysqli_error($conn));
 
 

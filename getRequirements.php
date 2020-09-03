@@ -11,7 +11,7 @@ require 'charges_management.php';
 $data = json_decode(file_get_contents('php://input'), true);
 $cat_id = $data['cat_id'];
 
-$q="select * from requirement where is_accepted=1  and category = '$cat_id'";
+$q="select * from requirement as req,user as u where is_accepted=1  and category = '$cat_id' and req.user_id = u.user_id";
 $r=mysqli_query($conn,$q);
 
 $in=array();
