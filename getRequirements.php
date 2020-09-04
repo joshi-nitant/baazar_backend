@@ -23,7 +23,7 @@ while($i=mysqli_fetch_array($r,MYSQLI_ASSOC))
 $out=array();
 $response_transaction = array();
 
-if(count($in)==0){
+if($conn->error){
 	$response_transaction['response_code'] = 404;
 	echo json_encode($response_transaction);
 }else{
